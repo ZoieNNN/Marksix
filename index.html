@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>香港六合彩合資收益分配協議書生成器</title>
+    <style>
+        :root {
+            --primary-color: #007aff;
+            --primary-hover: #0056b3;
+            --bg-color: #f5f5f7;
+            --card-bg: #ffffff;
+            --text-color: #1d1d1f;
+            --border-color: #d2d2d7;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.5;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+        }
+        h1 {
+            font-size: 24px;
+            text-align: center;
+            margin-bottom: 24px;
+            color: #333;
+        }
+        h2 {
+            font-size: 18px;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 8px;
+            margin-top: 25px;
+        }
+        .form-group {
+            margin-bottom: 16px;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 6px;
+            font-size: 14px;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(0,122,255,0.1);
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        .participant-row {
+            display: grid;
+            grid-template-columns: 2fr 3fr 1fr;
+            gap: 10px;
+            margin-bottom: 10px;
+            align-items: center;
+        }
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: 600;
+            transition: background-color 0.2s;
+        }
+        button:hover {
+            background-color: var(--primary-hover);
+        }
+        .btn-secondary {
+            background-color: #e5e5ea;
+            color: #333;
+            margin-top: 5px;
+        }
+        .btn-secondary:hover {
+            background-color: #d1d1d6;
+        }
+        .btn-danger {
+            background-color: #ff3b30;
+            padding: 10px;
+        }
+        .btn-danger:hover {
+            background-color: #d32f2f;
+        }
+        .action-btns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-top: 20px;
+        }
+        #outputAgreement {
+            white-space: pre-wrap;
+            font-family: "PingFang HK", "Microsoft JhengHei", sans-serif;
+            background: #fff;
+            padding: 30px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-top: 20px;
+            display: none;
+            line-height: 1.8;
+            color: #000;
+        }
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #outputAgreement, #outputAgreement * {
+                visibility: visible;
+            }
+            #outputAgreement {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                border: none;
+                padding: 0;
+                display: block !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="card">
+        <h1>🇭🇰 六合彩合資收益分配協議書生成器</h1>
+        <p style="font-size: 13px; color: #666; text-align: center; margin-top: -15px;">基於香港法律設計 • 利益絕對均分 • 隱私保護版本</p>
+        
+        <form id="agreementForm" onsubmit="return generateAgreement(event)">
+            <h2>1. 投注及開獎詳情</h2>
+            <div class="grid-2">
+                <div class="form-group">
+                    <label for="drawNo">六合彩期數</label>
+                    <input type="text" id="drawNo" placeholder="例如：26/088" required>
+                </div>
+                <div class="form-group">
+                    <label for="drawDate">開獎日期</label>
+                    <input type="text" id="drawDate" placeholder="例如：2026年9月11日" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="numbers">投注號碼組合 / 玩法種類</label>
+                <input type="text" id="numbers" placeholder="例如：05, 12, 23, 31, 40, 49 (或寫「見通訊群組確據相片」)" required>
+            </div>
+            <div class="grid-2">
+                <div class="form-group">
+                    <label for="totalAmount">總投注金額 (HKD)</label>
+                    <input type="number" id="totalAmount" placeholder="港幣金額" required>
+                </div>
+                <div class="form-group">
+                    <label for="managerName">主要購買及保管人姓名</label>
+                    <input type="text" id="managerName" placeholder="負責前往投注或操作戶口的人" required>
+                </div>
+            </div>
+
+            <h2>2. 合資人資料 (最少2人)</h2>
+            <p style="font-size: 12px; color: #888; margin-top: -10px;">* 為保障隱私，身份證明或電話只需填寫【頭4位數字】作識別用途。</p>
+            <div id="participantsContainer">
+                <div class="participant-row">
+                    <input type="text" placeholder="合資人姓名 / 暱稱" class="p-name" required>
+                    <input type="text" placeholder="身份證或電話頭4位 (如 A123 / 9123)" class="p-id" required>
+                    <button type="button" class="btn-danger" onclick="removeRow(this)">刪除</button>
+                </div>
+                <div class="participant-row">
+                    <input type="text" placeholder="合資人姓名 / 暱稱" class="p-name" required>
+                    <input type="text" placeholder="身份證或電話頭4位" class="p-id" required>
+                    <button type="button" class="btn-danger" onclick="removeRow(this)">刪除</button>
+                </div>
+            </div>
+            <button type="button" class="btn-secondary" onclick="addParticipantRow()">＋ 增加合資人</button>
+
+            <div style="margin-top: 30px;">
+                <button type="submit">⚡ 生成合資協議書</button>
+            </div>
+        </form>
+    </div>
+
+    <div id="outputAgreement" class="card"></div>
+    
+    <div class="action-btns" id="actionButtons" style="display: none;">
+        <button type="button" class="btn-secondary" onclick="copyText()">📋 複製協議書文字</button>
+        <button type="button" onclick="window.print()">🖨️ 列印 / 儲存為 PDF</button>
+    </div>
+</div>
+
+<script>
+    function addParticipantRow() {
+        const container = document.getElementById('participantsContainer');
+        const div = document.createElement('div');
+        div.className = 'participant-row';
+        div.innerHTML = `
+            <input type="text" placeholder="合資人姓名 / 暱稱" class="p-name" required>
+            <input type="text" placeholder="身份證或電話頭4位" class="p-id" required>
+            <button type="button" class="btn-danger" onclick="removeRow(this)">刪除</button>
+        `;
+        container.appendChild(div);
+    }
+
+    function removeRow(btn) {
+        const rows = document.querySelectorAll('.participant-row');
+        if (rows.length <= 2) {
+            alert('合資協議最少需要2名參與者。');
+            return;
+        }
+        btn.parentElement.remove();
+    }
+
+    function generateAgreement(e) {
+        e.preventDefault();
+        
+        try {
+            const drawNo = document.getElementById('drawNo').value;
+            const drawDate = document.getElementById('drawDate').value;
+            const numbers = document.getElementById('numbers').value;
+            const totalAmount = document.getElementById('totalAmount').value;
+            const managerName = document.getElementById('managerName').value;
+            
+            const names = document.querySelectorAll('.p-name');
+            const ids = document.querySelectorAll('.p-id');
+            
+            let participantsList = '';
+            let participantsSign = '';
+            
+            names.forEach((nameInput, index) => {
+                const name = nameInput.value;
+                const id = ids[index].value;
+                participantsList += `* 姓名/暱稱：${name} ｜ 識別號碼(首4位)：${id}\n`;
+                participantsSign += `簽署人：${name} (首4位:${id}) _________________  日期：____年__月__日\n\n`;
+            });
+
+            const agreementText = `【合買六合彩收益分配協議書】
+
+本協議書由以下全體簽署人（下稱「全體簽署人」）於自願、平等之原則下共同訂立：
+
+全體簽署人資料：
+${participantsList}
+第一條：合作目的與投注詳情
+全體簽署人同意共同出資購買由香港賽馬會主辦之六合彩彩券，詳情如下：
+1. 六合彩期數：第 ${drawNo} 期
+2. 開獎日期：${drawDate}
+3. 投注號碼組合／玩法種類：${numbers}
+4. 總投注金額：港幣 $${totalAmount} 元整
+
+第二條：出資與獎金分配原則（絕對均分制）
+1. 全體簽署人明確同意，本期彩券之總投注金額由全體簽署人「平均分擔」。
+2. 凡本協議書第一條所述之彩券中獎，不論中獎獎項（包括頭獎至七獎或任何特別獎項）及中獎金額之多寡，於扣除香港賽馬會或法律規定之必要費用（如有）後，所得之淨獎金必須由全體簽署人「絕對平均分配」（即按總人數均分），任何一方不得以出資先後或多寡為由要求獲取更多利益。
+
+第三條：代表購買與保管人責任
+1. 全體簽署人一致推舉【 ${managerName} 】（下稱「保管人」）為代表，負責前往香港賽馬會投注站或透過其個人電子投注戶口購買上述彩券，並負責妥善保管彩券正本或相關電子投注紀錄。
+2. 保管人應於開獎前，將彩券正反面清晰相片或電子投注成功畫面截圖，發送至全體簽署人共同參與之通訊群組（如 WhatsApp / WeChat / LINE 等）作為確據。
+
+第四條：領獎與派發時限
+1. 若上述彩券中獎，保管人應於香港賽馬會規定的領獎期限內及開獎後 7 天內，依法辦理領獎手續。
+2. 保管人成功領取獎金後，必須於 3 天內將全體簽署人各自應得之均分獎金，以銀行轉帳、支票或全體簽署人同意之電子支付方式全額交付，不得有任何扣留或延誤。
+
+第五條：違約責任
+1. 誠實信用：保管人若有任何隱匿中獎事實、私自冒領、拒絕分配獎金，或因故意/重大過失導致彩券損毀、遺失而無法領獎之行為，須對全體簽署人承擔全部民事及刑事法律責任，並須依法向其餘簽署人賠償相等於其應得均分獎金之金額。
+
+第六條：身份識別與法律效力
+1. 全體簽署人確認，本協議書中登記之「姓名/暱稱」配合「身份證明文件或電話號碼之首4位數字」，已足以在彼此內部及法律上明確辨識各方身份。各方承諾不得以資料未完全填寫為由，主張本協議書無效。
+2. 本協議透過電子通訊軟體傳閱並經各方回覆「同意/確認」、或以紙本簽署，均具有同等之法律約束力。
+
+第七條：適用法律與爭議管轄
+1. 本協議書之訂立、效力、解釋、履行及爭議解決，均受【香港特別行政區法律】管轄。
+2. 因本協議書引起或與本協議書有關的任何爭議，全體簽署人應先友好協商解决；協商不成時，全體簽署人一致同意提交【香港特別行政區法院】訴訟管轄。
+
+全體簽署人確認簽署／同意（紙本簽名或於通訊群組回覆「確認同意」）：${participantsSign}`;const outputDiv = document.getElementById('outputAgreement');outputDiv.innerText = agreementText;outputDiv.style.display = 'block';document.getElementById('actionButtons').style.display = 'grid';outputDiv.scrollIntoView({ behavior: 'smooth' });} catch (error) {alert('產生協議書時發生錯誤，請確保欄位填寫完整：' + error.message);}return false;}function copyText() {const text = document.getElementById('outputAgreement').innerText;navigator.clipboard.writeText(text).then(() => {alert('協議書內容已成功複製到剪貼簿！可直接貼到 WhatsApp / WeChat 群組確認。');}).catch(err => {alert('複製失敗，請手動全選複製。');});}
