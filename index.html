@@ -53,7 +53,7 @@
             margin-bottom: 6px;
             font-size: 14px;
         }
-        input, select, textarea {
+        input {
             width: 100%;
             padding: 10px;
             border: 1px solid var(--border-color);
@@ -61,7 +61,7 @@
             box-sizing: border-box;
             font-size: 14px;
         }
-        input:focus, select:focus, textarea:focus {
+        input:focus {
             outline: none;
             border-color: var(--primary-color);
             box-shadow: 0 0 0 3px rgba(0,122,255,0.1);
@@ -73,12 +73,12 @@
         }
         .participant-row {
             display: grid;
-            grid-template-columns: 2fr 3fr 1fr;
+            grid-template-columns: 2fr 3fr auto;
             gap: 10px;
             margin-bottom: 10px;
             align-items: center;
         }
-        button {
+        .btn {
             background-color: var(--primary-color);
             color: white;
             border: none;
@@ -89,8 +89,11 @@
             width: 100%;
             font-weight: 600;
             transition: background-color 0.2s;
+            text-align: center;
+            display: block;
+            box-sizing: border-box;
         }
-        button:hover {
+        .btn:hover {
             background-color: var(--primary-hover);
         }
         .btn-secondary {
@@ -103,7 +106,9 @@
         }
         .btn-danger {
             background-color: #ff3b30;
-            padding: 10px;
+            color: white;
+            padding: 10px 15px;
+            font-size: 14px;
         }
         .btn-danger:hover {
             background-color: #d32f2f;
@@ -152,72 +157,71 @@
         <h1>🇭🇰 六合彩合資收益分配協議書生成器</h1>
         <p style="font-size: 13px; color: #666; text-align: center; margin-top: -15px;">基於香港法律設計 • 利益絕對均分 • 隱私保護版本</p>
         
-        <form id="agreementForm" onsubmit="return generateAgreement(event)">
+        <div>
             <h2>1. 投注及開獎詳情</h2>
             <div class="grid-2">
                 <div class="form-group">
                     <label for="drawNo">六合彩期數</label>
-                    <input type="text" id="drawNo" placeholder="例如：26/088" required>
+                    <input type="text" id="drawNo" placeholder="例如：26/088">
                 </div>
                 <div class="form-group">
                     <label for="drawDate">開獎日期</label>
-                    <input type="text" id="drawDate" placeholder="例如：2026年9月11日" required>
+                    <input type="date" id="drawDate">
                 </div>
             </div>
             <div class="form-group">
                 <label for="numbers">投注號碼組合 / 玩法種類</label>
-                <input type="text" id="numbers" placeholder="例如：05, 12, 23, 31, 40, 49 (或寫「見通訊群組確據相片」)" required>
+                <input type="text" id="numbers" placeholder="例如：05, 12, 23, 31, 40, 49 (或寫「見通訊群組確據相片」)">
             </div>
             <div class="grid-2">
                 <div class="form-group">
                     <label for="totalAmount">總投注金額 (HKD)</label>
-                    <input type="number" id="totalAmount" placeholder="港幣金額" required>
+                    <input type="number" id="totalAmount" placeholder="港幣金額">
                 </div>
                 <div class="form-group">
                     <label for="managerName">主要購買及保管人姓名</label>
-                    <input type="text" id="managerName" placeholder="負責前往投注或操作戶口的人" required>
+                    <input type="text" id="managerName" placeholder="負責前往投注或操作戶口的人">
                 </div>
             </div>
 
             <h2>2. 合資人資料 (最少2人)</h2>
-            <p style="font-size: 12px; color: #888; margin-top: -10px;">* 為保障隱私，身份證明或電話只需填寫【頭4位數字】作識別用途。</p>
+            <p style="font-size: 12px; color: #888; margin-top: -10px;">* 為保障隱私，頭4位數字身份證明或電話 作識別用途。</p>
             <div id="participantsContainer">
                 <div class="participant-row">
-                    <input type="text" placeholder="合資人姓名 / 暱稱" class="p-name" required>
-                    <input type="text" placeholder="身份證或電話頭4位 (如 A123 / 9123)" class="p-id" required>
-                    <button type="button" class="btn-danger" onclick="removeRow(this)">刪除</button>
+                    <input type="text" placeholder="合資人姓名 / 暱稱" class="p-name">
+                    <input type="text" placeholder="頭4位身份證或電話 (如 A123 / 91234567)" class="p-id">
+                    <button type="button" class="btn btn-danger" onclick="removeRow(this)">刪除</button>
                 </div>
                 <div class="participant-row">
-                    <input type="text" placeholder="合資人姓名 / 暱稱" class="p-name" required>
-                    <input type="text" placeholder="身份證或電話頭4位" class="p-id" required>
-                    <button type="button" class="btn-danger" onclick="removeRow(this)">刪除</button>
+                    <input type="text" placeholder="合資人姓名 / 暱稱" class="p-name">
+                    <input type="text" placeholder="頭4位身份證或電話 (如 A123 / 91234567)" class="p-id">
+                    <button type="button" class="btn btn-danger" onclick="removeRow(this)">刪除</button>
                 </div>
             </div>
-            <button type="button" class="btn-secondary" onclick="addParticipantRow()">＋ 增加合資人</button>
+            <button type="button" class="btn btn-secondary" onclick="addParticipantRow()">＋ 增加合資人</button>
 
             <div style="margin-top: 30px;">
-                <button type="submit">⚡ 生成合資協議書</button>
+                <button type="button" class="btn" onclick="generateAgreement()">⚡ 生成合資協議書</button>
             </div>
-        </form>
+        </div>
     </div>
 
     <div id="outputAgreement" class="card"></div>
     
     <div class="action-btns" id="actionButtons" style="display: none;">
-        <button type="button" class="btn-secondary" onclick="copyText()">📋 複製協議書文字</button>
-        <button type="button" onclick="window.print()">🖨️ 列印 / 儲存為 PDF</button>
+        <button type="button" class="btn btn-secondary" onclick="copyText()">📋 複製協議書文字</button>
+        <button type="button" class="btn" onclick="window.print()">🖨️ 列印 / 儲存為 PDF</button>
     </div>
 </div>
-
 <script>
     function addParticipantRow() {
         const container = document.getElementById('participantsContainer');
         const div = document.createElement('div');
         div.className = 'participant-row';
         div.innerHTML = `
-            <input type="text" placeholder="合資人姓名 / 暱稱" class="p-name" required>
-            <input type="text" placeholder="身份證或電話頭4位" class="p-id" required>
-            <button type="button" class="btn-danger" onclick="removeRow(this)">刪除</button>
+            <input type="text" placeholder="合資人姓名 / 暱稱" class="p-name">
+            <input type="text" placeholder="頭4位身份證或電話 (如 A123 / 91234567)" class="p-id">
+            <button type="button" class="btn btn-danger" onclick="removeRow(this)">刪除</button>
         `;
         container.appendChild(div);
     }
@@ -231,30 +235,52 @@
         btn.parentElement.remove();
     }
 
-    function generateAgreement(e) {
-        e.preventDefault();
+    function generateAgreement() {
+        const drawNo = document.getElementById('drawNo').value.trim();
+        const drawDate = document.getElementById('drawDate').value.trim();
+        const numbers = document.getElementById('numbers').value.trim();
+        const totalAmount = document.getElementById('totalAmount').value.trim();
+        const managerName = document.getElementById('managerName').value.trim();
         
-        try {
-            const drawNo = document.getElementById('drawNo').value;
-            const drawDate = document.getElementById('drawDate').value;
-            const numbers = document.getElementById('numbers').value;
-            const totalAmount = document.getElementById('totalAmount').value;
-            const managerName = document.getElementById('managerName').value;
-            
-            const names = document.querySelectorAll('.p-name');
-            const ids = document.querySelectorAll('.p-id');
-            
-            let participantsList = '';
-            let participantsSign = '';
-            
-            names.forEach((nameInput, index) => {
-                const name = nameInput.value;
-                const id = ids[index].value;
-                participantsList += `* 姓名/暱稱：${name} ｜ 識別號碼(首4位)：${id}\n`;
-                participantsSign += `簽署人：${name} (首4位:${id}) _________________  日期：____年__月__日\n\n`;
-            });
+        if (!drawNo || !drawDate || !numbers || !totalAmount || !managerName) {
+            alert('請填寫所有投注及開獎詳情欄位！包括選擇月曆上的開獎日期。');
+            return;
+        }
 
-            const agreementText = `【合買六合彩收益分配協議書】
+        const names = document.querySelectorAll('.p-name');
+        const ids = document.querySelectorAll('.p-id');
+        
+        let participantsList = '';
+        let participantsConfirmList = '';
+        let validParticipantsCount = 0;
+        
+        for (let i = 0; i < names.length; i++) {
+            const name = names[i].value.trim();
+            const id = ids[i].value.trim();
+            
+            if (!name || !id) {
+                alert('所有合資人的「姓名」和「頭4位識別碼」都必須填寫！');
+                return;
+            }
+            
+            participantsList += `* 姓名/暱稱：${name} ｜ 首4位身份證明/ 電話號碼：${id}\n`;
+            participantsConfirmList += `* 確認人：${name} (首4位身份證明/ 電話號碼: ${id})\n`;
+            validParticipantsCount++;
+        }
+
+        if (validParticipantsCount < 2) {
+            alert('合資協議最少需要2名參與者。');
+            return;
+        }
+
+        // 自動獲取生成協議書時的今日日期
+        const today = new Date();
+        const year = today.getFullYear();
+        const month = String(today.getMonth() + 1).padStart(2, '0');
+        const day = String(today.getDate()).padStart(2, '0');
+        const currentDateStr = `${year}年${month}月${day}日`;
+
+        const agreementText = `【合買六合彩收益分配協議書】
 
 本協議書由以下全體簽署人（下稱「全體簽署人」）於自願、平等之原則下共同訂立：
 
@@ -284,10 +310,26 @@ ${participantsList}
 
 第六條：身份識別與法律效力
 1. 全體簽署人確認，本協議書中登記之「姓名/暱稱」配合「身份證明文件或電話號碼之首4位數字」，已足以在彼此內部及法律上明確辨識各方身份。各方承諾不得以資料未完全填寫為由，主張本協議書無效。
-2. 本協議透過電子通訊軟體傳閱並經各方回覆「同意/確認」、或以紙本簽署，均具有同等之法律約束力。
+2. 本協議書生成即代表全體簽署人已充分閱讀、理解並完全同意上述所有條款，具有同等之法律約束力。
 
-第七條：適用法律與爭議管轄
-1. 本協議書之訂立、效力、解釋、履行及爭議解決，均受【香港特別行政區法律】管轄。
-2. 因本協議書引起或與本協議書有關的任何爭議，全體簽署人應先友好協商解决；協商不成時，全體簽署人一致同意提交【香港特別行政區法院】訴訟管轄。
+生成日期：${currentDateStr}
 
-全體簽署人確認簽署／同意（紙本簽名或於通訊群組回覆「確認同意」）：${participantsSign}`;const outputDiv = document.getElementById('outputAgreement');outputDiv.innerText = agreementText;outputDiv.style.display = 'block';document.getElementById('actionButtons').style.display = 'grid';outputDiv.scrollIntoView({ behavior: 'smooth' });} catch (error) {alert('產生協議書時發生錯誤，請確保欄位填寫完整：' + error.message);}return false;}function copyText() {const text = document.getElementById('outputAgreement').innerText;navigator.clipboard.writeText(text).then(() => {alert('協議書內容已成功複製到剪貼簿！可直接貼到 WhatsApp / WeChat 群組確認。');}).catch(err => {alert('複製失敗，請手動全選複製。');});}
+全體確認同意人：
+${participantsConfirmList}`;
+
+        const outputDiv = document.getElementById('outputAgreement');
+        outputDiv.innerText = agreementText;
+        outputDiv.style.display = 'block';
+        document.getElementById('actionButtons').style.display = 'grid';
+        outputDiv.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function copyText() {
+        const text = document.getElementById('outputAgreement').innerText;
+        navigator.clipboard.writeText(text).then(() => {
+            alert('協議書內容已成功複製到剪貼簿！可直接貼到 WhatsApp / WeChat 群組確認。');
+        }).catch(err => {
+            alert('複製失敗，請手動全選複製。');
+        });
+    }
+</script>
